@@ -214,7 +214,7 @@ volante=S([1,2,3])([0.2,0.2,0.2])(STRUCT([cerchio1,cerchio2,out,out2,out3,out4,o
 #VIEW(volante)
 volanteruotato = R([1,2])(PI/2)(volante)
 volanteruotato2 = R([1,3])(PI/3)(volanteruotato)
-volantetraslato = T([1,2,3])([0.6,1,6,0.8])(volanteruotato2)
+volantetraslato = T([1,2,3])([0.6,1.6,0.8])(volanteruotato2)
 
 
 
