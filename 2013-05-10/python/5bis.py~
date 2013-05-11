@@ -1,0 +1,107 @@
+#from pyplasm import *
+
+import sys
+sys.path.append("/home/roberto/Scrivania/larpy")
+
+from lar import *
+from scipy import *
+
+"""Funzione per generare una griglia di complessi simpliciali"""
+def GRID(args):
+	model = ([[]],[[0]])
+	for k,steps in enumerate(args):
+		model = larExtrude(model,steps*[1])
+	V,cells = model
+	verts = AA(list)(scipy.array(V)/AA(float)(args))
+	return MKPOL([verts,AA(AA(lambda h:h+1))(cells),None])
+	
+domain = S([1])(2*PI)(GRID([25,25]))
+domain2 = GRID([25,25])
+dominio2D = S([1])(2*PI)(MAP([S2,S1])(GRID([25,25])))
+dominio2D2 = MAP([S2,S1])(GRID([25,25]))
+Dom1D = INTERVALS(1)(24)
+
+
+points1=[[0,0,0],[3,0,-0.5],[1,0,0],[0,0,-2]]
+curva1 = CUBICHERMITE(S1)(points1)
+p1 = MAP(curva1)(Dom1D)
+#VIEW(p1)
+
+points2=[[3,0,-0.5],[2.5,0,-1.7],[0,0,-2],[-1,0,0]]
+curva2 = CUBICHERMITE(S1)(points2)
+p2 = MAP(curva2)(Dom1D)
+
+points3=[[2.5,0,-1.7],[0,0,-1.7],[-1,0,0],[-1,0,0]]
+curva3 = CUBICHERMITE(S1)(points3)
+p3 = MAP(curva3)(Dom1D)
+
+points4=[[0,0,-0.5],[3,0,-0.5]]
+curva4 = BEZIER(S1)(points4)
+p4 = MAP(curva4)(Dom1D)
+
+points5=[[2.5,0,-0.5],[2.5,0,-1.7]]
+curva5 = BEZIER(S1)(points5)
+p5 = MAP(curva5)(Dom1D)
+
+points6=[[2.5,0,-0.5],[0,0,-0.5]]
+curva6 = BEZIER(S1)(points6)
+p6 = MAP(curva6)(Dom1D)
+
+superficie1=COLOR(YELLOW)(MAP(BEZIER(S2)([curva1,curva4]))(dominio2D2))
+superficie2=COLOR(YELLOW)(MAP(BEZIER(S2)([curva2,curva5]))(dominio2D2))
+superficie3=COLOR(YELLOW)(MAP(BEZIER(S2)([curva3,curva6]))(dominio2D2))
+
+points7=[[2.5,-0.01,-0.2],[2.9,-0.01,-0.4],[0.25,0,0],[0,0,-0.5]]
+curva7 = CUBICHERMITE(S1)(points7)
+p7 = MAP(curva7)(Dom1D)
+
+points8=[[2.3,-0.01,-0.4],[2.9,-0.01,-0.4]]
+curva8 = BEZIER(S1)(points8)
+p8 = MAP(curva8)(Dom1D)
+superficie4=COLOR(RED)(MAP(BEZIER(S2)([curva7,curva8]))(dominio2D2))
+
+#VIEW(STRUCT([p1,p2,p3,superficie1,superficie2,superficie3,superficie4]))
+
+#ribaltiaamo
+
+points11=[[0,0,0],[-3,0,-0.5],[-1,0,0],[0,0,-2]]
+curva11 = CUBICHERMITE(S1)(points11)
+p11 = MAP(curva11)(Dom1D)
+#VIEW(p1)
+
+points22=[[-3,0,-0.5],[-2.5,0,-1.7],[0,0,-2],[1,0,0]]
+curva22 = CUBICHERMITE(S1)(points22)
+p22 = MAP(curva22)(Dom1D)
+
+points33=[[-2.5,0,-1.7],[-0,0,-1.7],[1,0,0],[1,0,0]]
+curva33 = CUBICHERMITE(S1)(points33)
+p33 = MAP(curva33)(Dom1D)
+
+points44=[[-0,0,-0.5],[-3,0,-0.5]]
+curva44 = BEZIER(S1)(points44)
+p44 = MAP(curva44)(Dom1D)
+
+points55=[[-2.5,0,-0.5],[-2.5,0,-1.7]]
+curva55 = BEZIER(S1)(points55)
+p55 = MAP(curva55)(Dom1D)
+
+points66=[[-2.5,0,-0.5],[0,0,-0.5]]
+curva66 = BEZIER(S1)(points66)
+p66 = MAP(curva66)(Dom1D)
+
+superficie11=COLOR(YELLOW)(MAP(BEZIER(S2)([curva11,curva44]))(domain2))
+superficie22=COLOR(YELLOW)(MAP(BEZIER(S2)([curva22,curva55]))(domain2))
+superficie33=COLOR(YELLOW)(MAP(BEZIER(S2)([curva33,curva66]))(domain2))
+
+points77=[[-2.5,-0.01,-0.2],[-2.9,-0.01,-0.4],[0.25,0,0],[0,0,-0.5]]
+curva77 = CUBICHERMITE(S1)(points77)
+p77 = MAP(curva77)(Dom1D)
+
+points88=[[-2.3,-0.01,-0.4],[-2.9,-0.01,-0.4]]
+curva88 = BEZIER(S1)(points88)
+p88 = MAP(curva88)(Dom1D)
+superficie44=COLOR(RED)(MAP(BEZIER(S2)([curva77,curva88]))(domain2))
+
+VIEW(STRUCT([p1,p2,p3,superficie1,superficie2,superficie3,superficie4,superficie11,superficie22,superficie33,superficie44]))
+
+
